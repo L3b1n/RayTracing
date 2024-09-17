@@ -4,3 +4,6 @@
 [submodule "RayTracing/vendor/imgui"]
 	path = RayTracing/vendor/imgui
 	url = https://github.com/L3b1n/imgui.git
+[submodule "RayTracing/vendor/glm"]
+	path = RayTracing/vendor/glm
+	url = https://github.com/g-truc/glm.git
