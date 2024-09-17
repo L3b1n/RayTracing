@@ -1,3 +1,6 @@
 [submodule "RayTracing/vendor/GLFW"]
 	path = RayTracing/vendor/GLFW
 	url = https://github.com/L3b1n/glfw.git
+[submodule "RayTracing/vendor/imgui"]
+	path = RayTracing/vendor/imgui
+	url = https://github.com/L3b1n/imgui.git
