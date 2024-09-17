@@ -4,3 +4,6 @@
 [submodule "RayTracing/vendor/glm"]
 	path = RayTracing/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "RayTracing/vendor/GLFW"]
+	path = RayTracing/vendor/GLFW
+	url = https://github.com/L3b1n/glfw.git
