@@ -15,7 +15,7 @@
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 
-bool g_ApplicationRunning;
+extern bool g_ApplicationRunning;
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -369,7 +369,7 @@ static void FramePresent(ImGui_ImplVulkanH_Window* wd)
 		return;
 	}
 	check_vk_result(err);
-	wd->SemaphoreIndex = (wd->SemaphoreIndex + 1) % wd->ImageCount; // Now we can use the next set of semaphores
+	wd->SemaphoreIndex = (wd->SemaphoreIndex + 1) % wd->SemaphoreCount; // Now we can use the next set of semaphores
 }
 
 static void glfw_error_callback(int error, const char* description)
