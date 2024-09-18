@@ -1,0 +1,25 @@
+# Binaries
+**/bin/
+**/bin-int/
+
+# BackInfi files
+**.log
+
+# Libs
+**/Lib
+
+# Visual Studio files
+.vs
+**.vscode
+**.sln
+**.tlog
+**.user
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+
+# Mac files
+*.DS_Store
+
+# Python caches
+__pycache__
