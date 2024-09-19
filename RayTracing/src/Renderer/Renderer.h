@@ -2,6 +2,8 @@
 
 #include "Core/Image.h"
 
+#include <glm/glm.hpp>
+
 #include <memory>
 
 namespace RayTracing
@@ -16,6 +18,9 @@ namespace RayTracing
 		void Render();
 
 		std::shared_ptr<Image> GetFinalImage() const { return m_FinalImage; }
+
+	private:
+		glm::vec4 PerPixel(glm::vec2 coord);
 
 	private:
 		uint32_t* m_ImageData = nullptr;
