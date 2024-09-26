@@ -1,5 +1,6 @@
 #include "Core/Image.h"
 #include "Core/Timer.h"
+#include "Core/Camera.h"
 #include "Core/Application.h"
 
 #include "Renderer/Renderer.h"
@@ -9,6 +10,16 @@ bool g_ApplicationRunning = true;
 class ExampleLayer : public RayTracing::Layer
 {
 public:
+	ExampleLayer()
+		: m_Camera(45.0f, 0.1f, 100.0f)
+	{
+	}
+
+	virtual void OnUpdate(RayTracing::TimeStep ts) override
+	{
+		m_Camera.OnUpdate(ts);
+	}
+
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
@@ -40,7 +51,8 @@ public:
 		RayTracing::Timer timer;
 
 		m_Renderer.OnResize(m_ViewportWidth, m_ViewportHeight);
-		m_Renderer.Render();
+		m_Camera.OnResize(m_ViewportWidth, m_ViewportHeight);
+		m_Renderer.Render(m_Camera);
 
 		m_LastRenderTime = timer.ElapsedMillis();
 	}
@@ -51,6 +63,7 @@ private:
 	uint32_t m_ViewportWidth = 0;
 	uint32_t m_ViewportHeight = 0;
 
+	RayTracing::Camera m_Camera;
 	RayTracing::Renderer m_Renderer;
 };
 
