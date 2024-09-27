@@ -13,6 +13,10 @@ public:
 	ExampleLayer()
 		: m_Camera(45.0f, 0.1f, 100.0f)
 	{
+		RayTracing::Sphere sphere;
+		sphere.Position = { 0.0f, 0.0f, 0.0f };
+		sphere.Albedo = { 1.0f, 0.0f, 1.0f };
+		m_Scene.Spheres.push_back(sphere);
 	}
 
 	virtual void OnUpdate(RayTracing::TimeStep ts) override
@@ -52,7 +56,7 @@ public:
 
 		m_Renderer.OnResize(m_ViewportWidth, m_ViewportHeight);
 		m_Camera.OnResize(m_ViewportWidth, m_ViewportHeight);
-		m_Renderer.Render(m_Camera);
+		m_Renderer.Render(m_Scene, m_Camera);
 
 		m_LastRenderTime = timer.ElapsedMillis();
 	}
@@ -63,6 +67,7 @@ private:
 	uint32_t m_ViewportWidth = 0;
 	uint32_t m_ViewportHeight = 0;
 
+	RayTracing::Scene m_Scene;
 	RayTracing::Camera m_Camera;
 	RayTracing::Renderer m_Renderer;
 };
