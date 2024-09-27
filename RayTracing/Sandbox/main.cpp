@@ -5,6 +5,8 @@
 
 #include "Renderer/Renderer.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 bool g_ApplicationRunning = true;
 
 class ExampleLayer : public RayTracing::Layer
@@ -32,6 +34,12 @@ public:
 		{
 			Render();
 		}
+		ImGui::End();
+
+		ImGui::Begin("Scene");
+		ImGui::DragFloat3("Position", glm::value_ptr(m_Scene.Spheres[0].Position), 0.1f);
+		ImGui::DragFloat("Radius", &m_Scene.Spheres[0].Radius, 0.1f);
+		ImGui::ColorEdit3("Albedo", glm::value_ptr(m_Scene.Spheres[0].Albedo));
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
