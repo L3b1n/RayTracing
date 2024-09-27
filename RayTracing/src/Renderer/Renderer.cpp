@@ -19,7 +19,7 @@ namespace RayTracing
 
 	}
 
-	void Renderer::Render(const Camera& camera)
+	void Renderer::Render(const Scene& scene, const Camera& camera)
 	{
 		Ray ray;
 		ray.Origin = camera.GetPosition();
@@ -30,7 +30,7 @@ namespace RayTracing
 			{
 				ray.Direction = camera.GetRayDirections()[x + y * m_FinalImage->GetWidth()];
 
-				glm::vec4 color = TraceRay(ray);
+				glm::vec4 color = TraceRay(scene, ray);
 				color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
 				m_ImageData[x + y * m_FinalImage->GetWidth()] = Utils::ConvertToRGBA(color);
 			}
@@ -39,13 +39,18 @@ namespace RayTracing
 		m_FinalImage->SetData(m_ImageData);
 	}
 
-	glm::vec4 Renderer::TraceRay(const Ray& ray)
+	glm::vec4 Renderer::TraceRay(const Scene& scene, const Ray& ray)
 	{
-		float radius = 0.5f;
+		if (scene.Spheres.size() == 0)
+			return glm::vec4(0, 0, 0, 1);
+
+		const Sphere& sphere = scene.Spheres[0];
+
+		glm::vec3 origin = ray.Origin - sphere.Position;
 
 		float a = glm::dot(ray.Direction, ray.Direction);
-		float b = 2.0f * glm::dot(ray.Origin, ray.Direction);
-		float c = glm::dot(ray.Origin, ray.Origin) - radius * radius;
+		float b = 2.0f * glm::dot(origin, ray.Direction);
+		float c = glm::dot(origin, origin) - sphere.Radius * sphere.Radius;
 
 		float discriminant = b * b - 4.0f * a * c;
 
@@ -56,15 +61,15 @@ namespace RayTracing
 		float t1 = (-b - glm::sqrt(discriminant)) / (2.0f * a);
 
 		//glm::vec3 hit0 = rayOrigin + rayDirection * t0;
-		glm::vec3 hitPoint = ray.Origin + ray.Direction * t1;
+		glm::vec3 hitPoint = origin + ray.Direction * t1;
 		glm::vec3 normal = glm::normalize(hitPoint);
 
 		glm::vec3 lightDir = glm::normalize(glm::vec3(-1, -1, -1));
 
 		float lightIntensity = glm::max(glm::dot(normal, -lightDir), 0.0f);
 
-		glm::vec3 sphereColor(1, 0, 1);
-		sphereColor = normal * 0.5f + 0.5f;
+		glm::vec3 sphereColor = sphere.Albedo;
+		//sphereColor = normal * 0.5f + 0.5f;
 		sphereColor *= lightIntensity;
 
 		return glm::vec4(sphereColor, 1.0f);
