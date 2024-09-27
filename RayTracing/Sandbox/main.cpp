@@ -15,10 +15,21 @@ public:
 	ExampleLayer()
 		: m_Camera(45.0f, 0.1f, 100.0f)
 	{
-		RayTracing::Sphere sphere;
-		sphere.Position = { 0.0f, 0.0f, 0.0f };
-		sphere.Albedo = { 1.0f, 0.0f, 1.0f };
-		m_Scene.Spheres.push_back(sphere);
+		{
+			RayTracing::Sphere sphere;
+			sphere.Position = { 0.0f, 0.0f, 0.0f };
+			sphere.Radius = 0.5f;
+			sphere.Albedo = { 1.0f, 0.0f, 1.0f };
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			RayTracing::Sphere sphere;
+			sphere.Position = { 1.0f, 0.0f, -5.0f };
+			sphere.Radius = 1.5f;
+			sphere.Albedo = { 0.2f, 0.3f, 1.0f };
+			m_Scene.Spheres.push_back(sphere);
+		}
 	}
 
 	virtual void OnUpdate(RayTracing::TimeStep ts) override
@@ -37,9 +48,19 @@ public:
 		ImGui::End();
 
 		ImGui::Begin("Scene");
-		ImGui::DragFloat3("Position", glm::value_ptr(m_Scene.Spheres[0].Position), 0.1f);
-		ImGui::DragFloat("Radius", &m_Scene.Spheres[0].Radius, 0.1f);
-		ImGui::ColorEdit3("Albedo", glm::value_ptr(m_Scene.Spheres[0].Albedo));
+		for (size_t i = 0; i < m_Scene.Spheres.size(); i++)
+		{
+			ImGui::PushID(i);
+
+			RayTracing::Sphere& sphere = m_Scene.Spheres[i];
+			ImGui::DragFloat3("Position", glm::value_ptr(sphere.Position), 0.1f);
+			ImGui::DragFloat("Radius", &sphere.Radius, 0.1f);
+			ImGui::ColorEdit3("Albedo", glm::value_ptr(sphere.Albedo));
+
+			ImGui::Separator();
+
+			ImGui::PopID();
+		}
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
