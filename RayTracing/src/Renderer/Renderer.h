@@ -4,6 +4,7 @@
 #include "Core/Scene.h"
 #include "Core/Image.h"
 #include "Core/Camera.h"
+#include "Core/Random.h"
 
 #include <glm/glm.hpp>
 
