@@ -131,16 +131,16 @@ int main(int argc, char** argv)
 	RayTracing::Application* app = new RayTracing::Application(spec);
 	app->PushLayer<ExampleLayer>();
 	app->SetMenubarCallback([app]()
+	{
+		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::BeginMenu("File"))
+			if (ImGui::MenuItem("Exit"))
 			{
-				if (ImGui::MenuItem("Exit"))
-				{
-					app->Close();
-				}
-				ImGui::EndMenu();
+				app->Close();
 			}
-		});
+			ImGui::EndMenu();
+		}
+	});
 
 	while (g_ApplicationRunning)
 	{
