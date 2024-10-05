@@ -2,7 +2,7 @@
 **/bin/
 **/bin-int/
 
-# BackInfi files
+# RayTracing files
 **.log
 
 # Libs
