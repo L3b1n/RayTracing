@@ -42,8 +42,8 @@ project "RayTracing"
 
     links
     {
-		"ImGui",
 		"GLFW",
+		"ImGui",
 
 		"%{Library.Vulkan}",
     }
