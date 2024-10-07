@@ -16,11 +16,11 @@ public:
 		: m_Camera(45.0f, 0.1f, 100.0f)
 	{
 		RayTracing::Material& pinkSphere = m_Scene.Materials.emplace_back();
-		pinkSphere.Albedo = { 1.0f, 0.0f, 1.0f };
+		pinkSphere.Albedo    = { 1.0f, 0.0f, 1.0f };
 		pinkSphere.Roughness = 0.0f;
 
 		RayTracing::Material& blueSphere = m_Scene.Materials.emplace_back();
-		blueSphere.Albedo = { 0.2f, 0.3f, 1.0f };
+		blueSphere.Albedo    = { 0.2f, 0.3f, 1.0f };
 		blueSphere.Roughness = 0.1f;
 
 		{
